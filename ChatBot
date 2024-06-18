@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+// Chatbot class definition
+class ChatBot {
+private:
+    std::unordered_map<std::string, std::string> responses;
+
+public:
+    // Constructor to initialize the chatbot with some predefined responses
+    ChatBot() {
+        responses["hello"] = "Hi there! How can I help you today?";
+        responses["how are you"] = "I'm just a program, but I'm here to assist you!";
+        responses["what is your name"] = "I am mishra-ji-ka-beta, your virtual assistant.";
+        responses["bye"] = "Goodbye! Have a great day!";
+        responses["help"] = "You can ask me about the weather, my name, or how I am doing.";
+    }
+
+    // Function to get a response from the chatbot
+    std::string getResponse(const std::string &input) {
+        std::string lowerInput = toLowerCase(input);
+        if (responses.find(lowerInput) != responses.end()) {
+            return responses[lowerInput];
+        } else {
+            return "I'm sorry, I don't understand that. Can you ask something else?";
+        }
+    }
+
+    // Helper function to convert a string to lowercase
+    std::string toLowerCase(const std::string &str) {
+        std::string lowerStr = str;
+        for (char &c : lowerStr) {
+            c = tolower(c);
+        }
+        return lowerStr;
+    }
+};
+
+int main() {
+    ChatBot chatbot;
+    std::string userInput;
+
+    std::cout << "Welcome to mishra-ji-ka-beta! Type 'bye' to exit the chat." << std::endl;
+
+    while (true) {
+        std::cout << "You: ";
+        std::getline(std::cin, userInput);
+
+        if (chatbot.toLowerCase(userInput) == "bye") {
+            std::cout << "ChatBot: " << chatbot.getResponse(userInput) << std::endl;
+            break;
+        }
+
+        std::cout << "ChatBot: " << chatbot.getResponse(userInput) << std::endl;
+    }
+
+    return 0;
+}
